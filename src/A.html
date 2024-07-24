@@ -22,9 +22,14 @@
     </section>
 </body>
 <script>
-    new VPaging('.content').addEventListener('change', (vp,href)=> {
+    new VPaging('.content').addEventListener('change', (vp,url)=> {
         $('[page-href]').removeClass('active')
-        $(`[page-href="${href}"]`).addClass('active')
+        $('[page-href]').each( (idx,it)=> {
+            let purl = new URL($(it).attr('page-href'),location).pathname
+            if(purl == url) {
+                $(it).addClass('active')
+            }
+        })
     })
 </script>
 </html>

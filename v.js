@@ -1,6 +1,7 @@
 function VPaging(_ct){
     const self = this;
     this._ct = _ct;
+    this.sloc = location.pathname
     this.$events = []
     $(document).on('click','[page-href]',(event)=> {
         event.preventDefault();
@@ -10,17 +11,20 @@ function VPaging(_ct){
         return false
     })
     window.onpopstate = (event)=> {
+        console.log(event)
+        console.log(event.state?.href)
         if(event.state?.href) {
             self.paging.apply(self,[event.state.href,false])
         }else{
-            $(self._ct).html('')
+            self.paging.apply(self,[self.sloc,false])
         }
     }
 }
 
 VPaging.prototype.paging = function(href, forward = true){
     const self = this;
-    return $.get(href).then( res=> {
+    const url = new URL(href,location)
+    return $.get(url.pathname).then( res=> {
         let parser = new DOMParser();
         let doc = parser.parseFromString(res, 'text/html');
         let content = $(doc).find(self._ct)
@@ -28,9 +32,9 @@ VPaging.prototype.paging = function(href, forward = true){
             $(self._ct).html(content.html())
             $(self._ct).attr('class',content.attr('class'))
             if(forward) {
-                history.pushState({ href : href }, null, href)
+                history.pushState({ href : url.pathname }, null, url.pathname)
             }
-            self.triggerEvent('change',href)
+            self.triggerEvent('change',url.pathname)
         }
     })
 }
