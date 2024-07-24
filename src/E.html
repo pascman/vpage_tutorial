@@ -1,0 +1,30 @@
+
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href="/common.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="/v.js" ></script>
+</head>
+<body>
+    <ul class="lnb">
+        <li><a href="/src/A.html" page-href="/src/A.html">A</a></li>
+        <li><a href="/src/B.html" page-href="/src/B.html">B</a></li>
+        <li><a href="/src/C.html" page-href="/src/C.html">C</a></li>
+        <li><a href="/src/D.html" page-href="/src/D.html">D</a></li>
+        <li><a href="/src/E.html" page-href="/src/E.html" class="active">E</a></li>
+    </ul>
+    <section class="content ce">
+    E
+    </section>
+</body>
+<script>
+    new VPaging('.content').addEventListener('change', (vp,href)=> {
+        $('[page-href]').removeClass('active')
+        $(`[page-href="${href}"]`).addClass('active')
+    })
+</script>
+</html>
